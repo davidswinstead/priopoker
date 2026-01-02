@@ -669,7 +669,18 @@ let isAnimating = false;
 
 // Toggle ticket expand/collapse
 function toggleTicket(event, ticketElement) {
+    const wasCollapsed = ticketElement.classList.contains('collapsed');
     ticketElement.classList.toggle('collapsed');
+    
+    // If we're expanding a ticket, fetch its vote data
+    if (wasCollapsed) {
+        const ticketId = ticketElement.id.replace('ticket-', '');
+        // Find the original ticket key from the ticketId
+        const ticketKey = ticketKeys.find(key => safeId(key) === ticketId);
+        if (ticketKey) {
+            updateVotes(ticketKey);
+        }
+    }
 }
 
 function updateAllTickets() {
