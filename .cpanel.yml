@@ -2,4 +2,5 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/a2bremov/reallygoodteamtools.com/priopoker
+    - /bin/cp .htaccess $DEPLOYPATH/.htaccess
     - /bin/cp -R * $DEPLOYPATH
