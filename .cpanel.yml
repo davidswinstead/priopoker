@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/a2bremov/reallygoodteamtools/priopoker
+    - export DEPLOYPATH=/home/a2bremov/reallygoodteamtools.com/priopoker
     - /bin/cp -R * $DEPLOYPATH
