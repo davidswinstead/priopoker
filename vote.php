@@ -6,6 +6,7 @@ if (!$session) {
     die("Session code missing.");
 }
 
+require_once 'config.php';
 require_once 'db.php';
 
 $ticketResult = $conn->query("
@@ -83,7 +84,7 @@ if (!isset($_SESSION['voter_id'])) {
         </style>
     </head>
     <body>          
-        <h1><a href="./" style="color: inherit; text-decoration: none;">Supafly Prioritisation Voting Tool</a></h1>
+        <h1><a href="./" style="color: inherit; text-decoration: none;"><?php echo htmlspecialchars($app_name); ?></a></h1>
         <h2>Enter your name to vote</h2>
         <form method="post">
             <input type="text" name="voter_name" required placeholder="Your name">
@@ -219,7 +220,7 @@ if (!isset($_SESSION['voter_id'])) {
 </head>
 <body>
 <div class="container">
-    <h1><a href="./" style="color: inherit; text-decoration: none;">Supafly Prioritisation Voting Tool</a></h1>
+    <h1><a href="./" style="color: inherit; text-decoration: none;"><?php echo htmlspecialchars($app_name); ?></a></h1>
     <div class="ticket-header">
         <h2 style="margin: 0;">
             Vote:

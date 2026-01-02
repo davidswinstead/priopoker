@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once 'config.php';
 require_once 'db.php';
 
 // Create session from tab-delimited input
@@ -401,7 +402,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tickets"])) {
 </head>
 <body>
 <div class="container">
-<h1><a href="./" style="color: inherit; text-decoration: none;">Supafly Prioritisation Voting Tool</a></h1>
+<h1><a href="./" style="color: inherit; text-decoration: none;"><?php echo htmlspecialchars($app_name); ?></a></h1>
 <?php if (!isset($_GET["code"])): ?>
     
     <h2>How It Works</h2>
