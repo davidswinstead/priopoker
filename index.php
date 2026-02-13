@@ -245,6 +245,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tickets"])) {
         margin-bottom: 15px;
     }
 
+    .vote-criterion {
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 8px;
+        background: #fff;
+    }
+
+    .vote-criterion.vote-risk {
+        border-color: #dc3545;
+    }
+
     /* Responsive grid breakpoints */
     @media (max-width: 900px) {
         .vote-details {
@@ -397,6 +408,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tickets"])) {
         border-top-color: #333;
         z-index: 1000;
     }
+
 </style>
 
 </head>
@@ -636,20 +648,30 @@ function updateVotes(ticketKey) {
                 if (data[crit]) {
                     const votes = data[crit];
                     let total = 0, count = 0;
+                    const numericVotes = [];
                     for (const voter in votes) {
                         const val = votes[voter];
                         const score = (scoringMap[crit] || {})[val];
                         if (score !== undefined) {
                             total += score;
                             count++;
+                            numericVotes.push(score);
                         }
                     }
+
+                    let hasRiskSpread = false;
+                    if (numericVotes.length > 1) {
+                        const minVote = Math.min(...numericVotes);
+                        const maxVote = Math.max(...numericVotes);
+                        hasRiskSpread = (maxVote - minVote) > 1;
+                    }
+
                     const avg = count > 0 ? (total / count) : 0;
                     const avgWord = averageToWord(crit, avg);
                     const avgDisplay = count > 0 ? 
                         `<span class="score-tooltip" data-tooltip="${avg.toFixed(1)}">${avgWord}</span>` : 
                         "-";
-                    html += `<div><strong>${crit}:</strong><ul>`;
+                    html += `<div class="vote-criterion${hasRiskSpread ? ' vote-risk' : ''}"><strong>${crit}:</strong><ul>`;
                     for (const voter in votes) {
                         html += `<li>${voter}: ${votes[voter]}</li>`;
                     }
